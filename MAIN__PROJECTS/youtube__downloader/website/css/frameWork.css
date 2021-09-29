@@ -1,0 +1,78 @@
+* {
+    margin:0;
+    padding:0;
+    text-transform: capitalize;
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+/* all variables in the project */
+:root {
+
+
+    /* coloring vars */
+    --mainColor:#4cd137;
+    --secondColor:#00a8ff;
+
+
+    --white100: #eee;
+    --white400: #ddd;
+    --white900: #ccc;
+
+    --black900: #111;
+    --black400: #222;
+    --black100: #333;
+
+    /* sizes and fonts vars */
+
+    --small:15px;
+    --mediem:20px;
+    --large:25px;
+    --xlarge:30px;
+    --xxlarge:35px;
+    --xxxlarge:40px;
+
+}
+/* special elements */
+/* the body of the page */
+body {
+    min-height:100vh;
+    background-color: white;
+    background-image:linear-gradient(45deg, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, .5))
+}
+
+section {
+    min-height:40vh;
+}
+
+/* special classes */
+.likebody {
+    background-image:linear-gradient(45deg, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, .5));
+    -webkit-background-clip: text;
+    color:transparent;
+}
+
+/* media queries */
+@media (max-width:600px){
+    .container {
+        width:100%;
+    }
+}
+
+@media (min-width:600px){
+    .container {
+        width:95%;
+    }
+}
+
+@media (min-width:900px){
+    .container {
+        width:90%;
+    }
+}
+
+@media (min-width:1100px){
+    .container {
+        width: 85%;
+    }
+}
