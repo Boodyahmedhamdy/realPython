@@ -38,22 +38,6 @@ class Human:
     def get_full_name(self):
         return f'{self.firstName} {self.middleName} {self.lastName}'
 
-    def get_first_name(self):
-        return self.firstName
-
-    def get_middle_name(self):
-        return self.lastName
-
-    def set_first_name(self, firstName):
-        self.firstName = firstName
-
-    def set_middle_name(self, middleName):
-        self.middleName = middleName
-
-    def set_last_name(self, lastName):
-        self.lastName = lastName
-
-    # NATIONAL ID CONTROL
     def get_nationalid(self):
         return self.__nationalID
 
