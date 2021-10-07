@@ -1,4 +1,6 @@
 import datetime
+from PIL import Image
+import time
 
 
 class Human:
@@ -12,6 +14,8 @@ class Human:
         self.firstName = input('what is your first name: ').strip().capitalize()
         self.middleName = input('what is your middle name: ').strip().capitalize()
         self.lastName = input('what is your last name: ').strip().capitalize()
+
+        self.profileImage = Image.open("images/defualtImage.jpg")
 
         self.phoneNumber = input('your phone number: ').strip()
         self.haveCar = input('do you have a car (y/n): ').lower()
@@ -38,6 +42,9 @@ class Human:
     def get_full_name(self):
         return f'{self.firstName} {self.middleName} {self.lastName}'
 
+    def change_profile_image(self, pathOfNewImage):
+        self.profileImage = Image.open(pathOfNewImage)
+
     def get_nationalid(self):
         return self.__nationalID
 
@@ -59,6 +66,9 @@ class Human:
               f'birthday : {self.birthday}\n'
               f'governorate : {self.governorate}\n'
               f'----------------------------------')
+        print(f"the image of {self.get_full_name()}")
+        time.sleep(2)
+        self.profileImage.show()
 
     # STATIC METHOD TO CONTROL THE CONSTRUCTOR AND ANALIZE DATA
     @staticmethod
@@ -251,3 +261,4 @@ class Human:
 
 # user = Human()
 # user.output()
+
