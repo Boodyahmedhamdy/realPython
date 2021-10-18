@@ -4,6 +4,7 @@ from win10toast import ToastNotifier  # FOR MAKING NOTIFICATIONS
 import os  # FOR MAKING DIRECTORIES IN PLAYLIST DOWNLOAD
 from tqdm import tqdm  # TO MAKE A PROGRESS BAR IN PLAYLIST DOWNLOAD
 from typing import Any  # for type hinting
+import time  # for dealing with time
 # from shutil import rmtree  # TO REMOVE NONE EMPTY FOLDER
 
 # MAIN INFORMATION
@@ -143,16 +144,27 @@ def download_playlist() -> None:
         os.makedirs(mainDownloadPath)
         print(mk_green('folder created successfully 😊'))
 
-        # DOWNLOADING PROCESS
+        # DOWNLOADING NOTIFICATION
         print(mk_green(f'start downloading {mk_blue(numberOfObjects)} audios'))
         start_downloading_notification(f"start downloading {playlistName}")
 
-        for audio in tqdm(playlist.videos, desc=f'downloading {mk_blue(playlistName)}'):
+        # time for whole playlist
+        allStartTime = time.time()
 
+        # DOWNLOADING PROCESS
+        for audio in tqdm(playlist.videos, desc=f'downloading {mk_blue(playlistName)}'):
+            singleStartTime = time.time()
             finalAudio = audio.streams.filter(only_audio=True).first().download(output_path=mainDownloadPath)
             convert_to_mp3(finalAudio)
+            singleDownloadingTime = time.time() - singleStartTime
 
-        finish_downloading_notification('download has finished .. thank you')
+            print(f"downloaded {audio.title} in {singleDownloadingTime / 60} minutes")
+
+        # time for the whole playlist
+        allDownloadingTime = time.time() - allStartTime
+
+        # finishing notification
+        finish_downloading_notification(f'download has finished in {allDownloadingTime / 60} minutes .. thank you')
 
     elif audioOrVideo == "v":
         mainDownloadPath = mainDownloadPath + '/' + "video" + '/' + playlistName
@@ -164,14 +176,24 @@ def download_playlist() -> None:
         os.makedirs(mainDownloadPath)
         print(mk_green('folder created successfully 😊'))
 
-        # DOWNLOADING PROCESS
+        # DOWNLOADING NOTIFICATION
         print(mk_green(f'start downloading {mk_blue(numberOfObjects)} videos'))
         start_downloading_notification(f"start downloading {playlistName}")
 
-        for video in tqdm(playlist.videos):
-            video.streams.get_highest_resolution().download(output_path=mainDownloadPath)
+        # to calculate time for the whole playlist
+        allStartTime = time.time()
 
-        finish_downloading_notification('download has finished .. thank you')
+        for video in tqdm(playlist.videos):
+            singleStartTime = time.time()
+            video.streams.get_highest_resolution().download(output_path=mainDownloadPath)
+            singleDownloadingTime = time.time() - singleStartTime
+
+            print(f"downloaded {video.title} in {singleDownloadingTime / 60} minutes")
+
+        # time for the play list
+        allDownloadingTime = time.time() - allStartTime
+
+        finish_downloading_notification(f'download has finished in {allDownloadingTime /60} minutes .. thank you')
 
     else:
         print(mk_red('invalid input .. please enter a or v next time'))
@@ -189,39 +211,65 @@ def download_single_video() -> None:
 
     USING PYTUBE MODULE .. YOUTUBE
     """
+
+    # taking the link from the user
     link = input('please enter link of the video : ')
 
+    # create an object to deal with the video
     video = YouTube(link)
 
+    # let user choose whether he wants to download it ad mp3 or mp4
     audioOrVideo = input('do you want to download audio or video (a/v) : ')
 
-
+    # in case of audio
     if audioOrVideo == 'a':
+        # setting download path
         mainDownloadPath = mainPath + '/' + "downloads"
 
         mainDownloadPath = mainDownloadPath + '/' + 'audio'
 
+        # start downloading notification
         print(f'start downloading {mk_green(video.title)}')
         start_downloading_notification("downloading has started")
 
-        finalAudio = video.streams.filter(only_audio=True).first().download(output_path=mainDownloadPath)
+        # downloading process
+        singleStartTime = time.time()
 
+        finalAudio = video.streams.filter(only_audio=True).first().download(output_path=mainDownloadPath)
+        # converting the .mp4 to .mp3 to be used as audio
         convert_to_mp3(finalAudio)
 
-        finish_downloading_notification('downloading has finished .. thank you')
+        singleDownloadingTime = time.time() - singleStartTime
 
+        print(f"{video.title} downloaded in {singleDownloadingTime/ 60} minutes")
+
+        # finishing notification
+        finish_downloading_notification(f'downloading has finished in {singleDownloadingTime/60} minutes .. thank you')
+
+    # in case of video
     elif audioOrVideo == 'v':
+        # setting downloading path
         mainDownloadPath = mainPath + '/' + "downloads"
 
         mainDownloadPath = mainDownloadPath + '/' + 'video'
 
+        # start downloading notification
         print(f'start downloading {mk_green(video.title)}')
         start_downloading_notification("downloading has started")
 
+        singleStratTime = time.time()
+
+        # ONLY HIGHEST RESOLUTION WILL BE DOWNLOADED
         video.streams.get_highest_resolution().download(output_path=mainDownloadPath)
 
+        singleDownloadingTime = time.time() - singleStratTime
+
+        print(f"{video.title} downloaded in {singleDownloadingTime /60} minutes")
+
+        # finishing download notification
         finish_downloading_notification('downloading has finished .. thank you')
 
+    # in case of wrong input
     else:
         print(mk_red('invaled input'))
         error_notification('invaled input')
@@ -265,7 +313,8 @@ def mainFunc() -> None:
 
 anotherDownload = 'y'
 print("wellcome to py downloader 😍")
-while anotherDownload == "y" or anotherDownload == 'Y':
+while anotherDownload == "y":
     mainFunc()
-    anotherDownload = input("do you want to do another download : ")
+    anotherDownload = input("do you want to do another download (y/n) : ").lower()
     print("-----------------")
+
