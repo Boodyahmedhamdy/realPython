@@ -3,6 +3,7 @@ from colorama import Fore, init  # COLORING TEXT IN PYTHON CONSOLE
 from win10toast import ToastNotifier  # FOR MAKING NOTIFICATIONS
 import os  # FOR MAKING DIRECTORIES IN PLAYLIST DOWNLOAD
 from tqdm import tqdm  # TO MAKE A PROGRESS BAR IN PLAYLIST DOWNLOAD
+from typing import Any  # for type hinting
 # from shutil import rmtree  # TO REMOVE NONE EMPTY FOLDER
 
 # MAIN INFORMATION
@@ -63,7 +64,7 @@ init(autoreset=True)
 
 # coloring functions
 
-def mk_green(thing):
+def mk_green(thing: Any) -> str:
 
     """
     :param thing: any text
@@ -73,7 +74,7 @@ def mk_green(thing):
     return f'{Fore.GREEN + str(thing) + Fore.RESET}'
 
 
-def mk_red(thing):
+def mk_red(thing: Any) -> str:
 
     """
     :param thing: any text
@@ -83,7 +84,7 @@ def mk_red(thing):
     return f'{Fore.RED + str(thing) + Fore.RESET}'
 
 
-def mk_blue(thing):
+def mk_blue(thing: Any) -> str:
 
     """
     :param thing: any text
@@ -96,7 +97,7 @@ def mk_blue(thing):
 # downloading functions
 # =========================
 # PLAY LIST DOWNLOAD
-def download_playlist():
+def download_playlist() -> None:
 
     """
     :param: takes no parameters
@@ -177,7 +178,7 @@ def download_playlist():
         error_notification('invalid input')
 
 # SINGLE VIDEO DOWNLOAD
-def download_single_video():
+def download_single_video() -> None:
 
     """
     takes no parameters
@@ -227,7 +228,7 @@ def download_single_video():
 
 
 # FOR THE .MP3 FILES
-def convert_to_mp3(audio):
+def convert_to_mp3(audio) -> None:
     """
     :JOB: converts .mp4 file exetention to .mp3 exetention
     :WHY: to be used as a mp3 file .. set as ringtone for example
@@ -239,9 +240,10 @@ def convert_to_mp3(audio):
     new_file = base + '.mp3'
     os.rename(audio, new_file)
 
+
 # start the main program
 # -----------------------
-def mainFunc():
+def mainFunc() -> None:
 
     """
     :JOB: the main function for the program and call the other functions on need
