@@ -13,11 +13,20 @@ def createStructure():
     nameOfParent = input("what is the name of TOPIC : ").upper().strip()
 
     import os
-    listOfFolders = ["code", 'resources', 'text__files', "project"]
+
+    # names of folders
+    listOfFolders = ["code", 'resources', 'text__files', "project", "databases"]
 
     for folder in listOfFolders:
+        # create folders first
         os.makedirs(f'{nameOfParent}/{folder}')
+
+        # create .gitkeep file to save the structure for the repo
         open(f'{nameOfParent}/{folder}/.gitkeep', 'a')
+
+        # create readme file
+        with open(f'{nameOfParent}/{folder}/README.md', 'a') as readmeFile:
+            readmeFile.write(f"# {folder} folder")
 
     print(make_green("structure was made successfully ❤"))
 
