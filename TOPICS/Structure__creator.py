@@ -55,7 +55,7 @@ def createStructure():
             if readmeCommitProcess.returncode != 0:
                 print(f"something went wrong while commit {readmeFile.name}")
 
-    print(make_green("structure was made successfully ❤"))
+    print(make_green("structure was made successfully ❤ and ready to be pushed"))
 
 
 createStructure()
