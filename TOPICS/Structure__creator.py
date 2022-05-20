@@ -1,5 +1,6 @@
 from colorama import Fore, init
 import subprocess
+import os
 
 init(autoreset=True)
 
@@ -12,8 +13,6 @@ def createStructure():
 
     # take name of the folder
     nameOfParent = input("what is the name of TOPIC : ").upper().strip()
-
-    import os
 
     # names of folders
     listOfFolders = ["code", 'resources', 'text__files', "project", "databases"]
@@ -33,7 +32,7 @@ def createStructure():
                 print(f"something went wrong while adding {gitkeepFile.name}")
 
             # handling commit with saved message
-            gitkeepCommitProcess = subprocess.run(["git", "commit", "-m", "'folder keeper'"],
+            gitkeepCommitProcess = subprocess.run(["git", "commit", "-m", "folder keeper"],
                                                   capture_output=True)
 
             # if something went wrong
@@ -43,13 +42,14 @@ def createStructure():
         # create readme file
         with open(f'{nameOfParent}/{folder}/README.md', 'a') as readmeFile:
             readmeFile.write(f"# {folder} folder")
+            readmeFile.close()
 
             readmeAddProcess = subprocess.run(["git", "add", f'{readmeFile.name}'],
                                               capture_output=True)
             if readmeAddProcess.returncode != 0:
                 print(f"something went wrong while adding {readmeFile.name}")
 
-            readmeCommitProcess = subprocess.run(["git", "commit", "-m", "'README File'"],
+            readmeCommitProcess = subprocess.run(["git", "commit", "-m", "README File"],
                                                  capture_output=True)
 
             if readmeCommitProcess.returncode != 0:
