@@ -26,11 +26,11 @@ def createStructure():
         with open(f'{nameOfParent}/{folder}/.gitkeep', 'a') as gitkeepFile:
 
             # handling add to staging area first
-            gitkeepAddProcess = subprocess.run(["git", "add", f'{gitkeepFile}'],
+            gitkeepAddProcess = subprocess.run(["git", "add", f'{gitkeepFile.name}'],
                                                capture_output=True)
             # if something went wrong
             if gitkeepAddProcess.returncode != 0:
-                print(f"something went wrong while adding {gitkeepFile}")
+                print(f"something went wrong while adding {gitkeepFile.name}")
 
             # handling commit with saved message
             gitkeepCommitProcess = subprocess.run(["git", "commit", "-m", "'folder keeper'"],
@@ -38,22 +38,22 @@ def createStructure():
 
             # if something went wrong
             if gitkeepCommitProcess.returncode != 0:
-                print(f"something went wrong while commiting {gitkeepFile}")
+                print(f"something went wrong while commiting {gitkeepFile.name}")
 
         # create readme file
         with open(f'{nameOfParent}/{folder}/README.md', 'a') as readmeFile:
             readmeFile.write(f"# {folder} folder")
 
-            readmeAddProcess = subprocess.run(["git", "add", f'{readmeFile}'],
+            readmeAddProcess = subprocess.run(["git", "add", f'{readmeFile.name}'],
                                               capture_output=True)
             if readmeAddProcess.returncode != 0:
-                print(f"something went wrong while adding {readmeFile}")
+                print(f"something went wrong while adding {readmeFile.name}")
 
             readmeCommitProcess = subprocess.run(["git", "commit", "-m", "'README File'"],
                                                  capture_output=True)
 
             if readmeCommitProcess.returncode != 0:
-                print(f"something went wrong while commit {readmeFile}")
+                print(f"something went wrong while commit {readmeFile.name}")
 
     print(make_green("structure was made successfully ❤"))
 
