@@ -5,7 +5,7 @@ import subprocess
 import colored_text
 
 # hold project name passed as a command line arguments
-project_name = sys.argv[1]
+project_name = input("enter name of project: ")
 
 # number of the project in the current directory
 project_index = counting_folders.count_folders_with_zfill(os.getcwd())
